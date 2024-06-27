@@ -92,19 +92,11 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates(){
-        return 0 == grid.find(maxSize-1);
+        return  grid.find(10) == grid.find(0);
     };
 
     // test client (optional)
     public static void main(String[] args) {
 
-        int size = 3;
-         Percolation val = new Percolation(size);
-
-        do{
-            val.open(StdRandom.uniformInt(3) + 1, StdRandom.uniformInt(3) + 1);
-        } while(!val.percolates());
-
-        System.out.println(val.numberOfOpenSites());
     }
 }
