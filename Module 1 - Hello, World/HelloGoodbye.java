@@ -4,7 +4,7 @@
  *
  ******************************************************************************/
 
-public class HelloByeWorld {
+public class HelloGoodbye {
 
     public static void main(String[] args) {
 
