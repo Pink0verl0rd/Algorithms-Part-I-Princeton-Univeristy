@@ -1,4 +1,4 @@
-package Module1;
+package hello;
 /******************************************************************************
  *
  *  Prints out Hello and Goodbye using the 2 command line arguments that would be provided

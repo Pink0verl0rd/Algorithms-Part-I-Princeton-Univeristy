@@ -1,4 +1,4 @@
-package Module1;
+package hello;
 // HelloWorld.java
 // Below is the syntax highlighted version of HelloWorld.java from §1.1 Hello World.
 

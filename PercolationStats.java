@@ -1,12 +1,13 @@
-package Module2;
+
+
 import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
 public class PercolationStats {
 
-    public double openlost[];
-    private final double CONFIDENCE_95 = 1.96;
+    private double openlost[];
+    private static double CONFIDENCE_95 = 1.96;
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials){
