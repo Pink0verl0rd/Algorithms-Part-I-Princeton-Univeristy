@@ -1,7 +1,12 @@
 {
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "algs4.jar",
-        "Libraries/algs4.jar"
-    ]
+    "java.project.referencedLibraries": {
+        "include": [
+            "lib/**/*.jar",
+            "algs4.jar",
+            "Module 1 - Hello, World/Libraries/algs4.jar"
+        ],
+        "exclude": [
+            "Libraries/algs4.jar"
+        ]
+    }
 }

@@ -8,8 +8,8 @@ public class RandomWord {
     public static void main(String[] args) {
         String value = "";
         
-        for (int i = 0 ; !StdIn.isEmpty() ; i++){
-            double p = (double) 1 / ( i + 1 );
+        for (int i = 0; !StdIn.isEmpty(); i++) {
+            double p = (double) 1 / (i + 1);
             String newvalue = StdIn.readString();
 
             if (StdRandom.bernoulli(p)) {
