@@ -11,16 +11,26 @@ public class PercolationStats {
 
     // perform independent trials on an n-by-n grid
     public PercolationStats(int n, int trials){
+        
+        if (n <= 0) {
+            throw new IllegalArgumentException("n <= 0.");
+        }
+        if (trials <= 0) {
+            throw new IllegalArgumentException("trials <= 0.");
+        }
+
         openlost = new double[trials];
         for(int i = 0 ; i < trials; i++){
             Percolation run = new Percolation(n);
             do {
 
                 run.open(StdRandom.uniformInt(n) + 1, StdRandom.uniformInt(n) + 1);
+                // PercolationVisualizer.draw(run,n);
            
             } while(!run.percolates());
 
             openlost[i] = (double) run.numberOfOpenSites() / ( n * n);
+            
         }   
     }
 
@@ -45,10 +55,11 @@ public class PercolationStats {
 
    // test client (see below)
    public static void main(String[] args){
-        PercolationStats test = new PercolationStats(5,30);
+        PercolationStats test = new PercolationStats(Integer.parseInt(args[0]),Integer.parseInt(args[1]));
         StdOut.println("mean                    = " + test.mean());
         StdOut.println("stddev                  = " + test.stddev());
-        StdOut.println("95% confidence interval = " + test.confidenceLo() + ", " + test.confidenceHi());
+        StdOut.println("95% confidence interval = [" + test.confidenceLo() + ", " + test.confidenceHi() + "]");
+        
    }
 
 }

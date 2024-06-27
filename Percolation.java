@@ -1,7 +1,5 @@
 
 //package Module2;
-import edu.princeton.cs.algs4.StdRandom;
-import edu.princeton.cs.algs4.StdStats;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
@@ -9,8 +7,10 @@ public class Percolation {
     private boolean openSpots[];
     private int numOfOpenSpots =  0;
     private WeightedQuickUnionUF grid;
+    private WeightedQuickUnionUF backwashQU;
     private int n;
     private int arraySize;
+    private boolean doesPercolates;
 
     
 
@@ -25,9 +25,11 @@ public class Percolation {
 
         // INIT
         this.grid = new WeightedQuickUnionUF(arraySize);
+        this.backwashQU = new WeightedQuickUnionUF(arraySize);
         this.openSpots = new boolean[arraySize];
         this.n = n;
         this.arraySize = arraySize;
+        this.doesPercolates = false;
 
         // Head
         this.openSpots[0] = true;
@@ -48,6 +50,7 @@ public class Percolation {
 
         if (row == 1) {
             grid.union(0,currIndex);
+            backwashQU.union(0,currIndex);
         }
         if (row == n) {
             grid.union(arraySize-1,currIndex);  
@@ -64,6 +67,7 @@ public class Percolation {
         if (row <= n && row > 0 && col > 0 && col <= n ){
             if ( isOpen(row,col) ) {
                 grid.union(this.currentLocation(row,col),currlocation);
+                backwashQU.union(this.currentLocation(row,col),currlocation);
             }
         }
     }
@@ -71,19 +75,15 @@ public class Percolation {
     private int currentLocation(int row, int col){
         // check bounds
         if (row < 1 || row > n) {
-            throw new IndexOutOfBoundsException("Row is out of bounds.");
+            throw new IllegalArgumentException("Row is out of bounds.");
         }
         if (col < 1 || col > n) {
-            throw new IndexOutOfBoundsException("Column is out of bounds.");
+            throw new IllegalArgumentException("Column is out of bounds.");
         }
         return (((row - 1) * n) + col);
     }
     // is the site (row, col) open?
     public boolean isOpen(int row, int col){
-        if (row < 1 || row > n || col < 1 || col > n) {
-            return false;   
-        }
-        
         try {
             int currentLocation = this.currentLocation(row, col);
             return this.openSpots[currentLocation];
@@ -94,10 +94,7 @@ public class Percolation {
 
     // is the site (row, col) full?
     public boolean isFull(int row, int col){
-        if (row < 1 || row > n || col < 1 || col > n) {
-            return false;   
-        }
-        return 0 == grid.find(currentLocation(row,col));
+        return backwashQU.find(0) == backwashQU.find(currentLocation(row, col));
     };
 
     // returns the number of open sites
@@ -107,30 +104,30 @@ public class Percolation {
 
     // does the system percolate?
     public boolean percolates(){
-        return  grid.find(arraySize-1) == grid.find(0);
+        return grid.find(arraySize-1) == grid.find(0);
     };
 
     // test client (optional)
     public static void main(String[] args) {
 
-        int n = 6;
+        // int n = 6;
 
         
 
 
-        Percolation val = new Percolation(n);
+        // Percolation val = new Percolation(n);
         
-        val.open(1, 1);
-        val.open(1, 2);
-        val.open(2, 2);
-        val.open(3, 2);
-        val.open(4, 2);
-        val.open(5, 2);
-        val.open(6, 2);
-
-
-        PercolationVisualizer.draw(val,n);
-
+        // val.open(1, 1);
+        // val.open(6, 2);
+        // val.open(5, 2);
+        // val.open(4, 2);
+        // val.open(3, 2);
+        // val.open(2, 2);
+        // PercolationVisualizer.draw(val,n);
+        
+        // val.open(1, 2);
+        
+        // PercolationVisualizer.draw(val,n);
         
     }
 }
