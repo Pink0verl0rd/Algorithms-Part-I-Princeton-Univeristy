@@ -6,13 +6,12 @@ public class RandomWord {
     
 
     public static void main(String[] args) {
-        boolean val;
         String value = "";
         
         for (int i = 0 ; !StdIn.isEmpty() ; i++){
             double p = (double) 1 / ( i + 1 );
             String newvalue = StdIn.readString();
-            
+
             if (StdRandom.bernoulli(p)) {
                 value = newvalue;
             }
