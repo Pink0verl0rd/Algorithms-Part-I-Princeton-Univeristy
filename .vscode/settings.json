@@ -8,5 +8,6 @@
         "exclude": [
             "Libraries/algs4.jar"
         ]
-    }
+    },
+    "java.project.explorer.showNonJavaResources": true
 }
