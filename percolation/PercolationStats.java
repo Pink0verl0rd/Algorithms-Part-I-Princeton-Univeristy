@@ -4,6 +4,11 @@ import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.StdRandom;
 import edu.princeton.cs.algs4.StdStats;
 
+
+/*
+ * Class that can handele create mutliple instances of the Percolation Class and collect the data to 
+ * genderate metrics.
+ */
 public class PercolationStats {
 
     private double openlost[];
@@ -34,21 +39,17 @@ public class PercolationStats {
         }   
     }
 
-    // sample mean of percolation threshold
     public double mean() {
         return StdStats.mean(openlost);
     }
 
-    // sample standard deviation of percolation threshold
     public double stddev()  {
         return StdStats.stddev(openlost);}
 
-    // low endpoint of 95% confidence interval
     public double confidenceLo()  {
         return mean() - CONFIDENCE_95 * stddev() / Math.sqrt(openlost.length);
     }
 
-    // high endpoint of 95% confidence interval
     public double confidenceHi()  {
         return mean() + CONFIDENCE_95 * stddev() / Math.sqrt(openlost.length);
     }
@@ -59,7 +60,5 @@ public class PercolationStats {
         StdOut.println("mean                    = " + test.mean());
         StdOut.println("stddev                  = " + test.stddev());
         StdOut.println("95% confidence interval = [" + test.confidenceLo() + ", " + test.confidenceHi() + "]");
-        
    }
-
 }

@@ -1,21 +1,3 @@
-# Project Title
+# Algorithms Part I From Princeton University
 
-## Description
-
-## Getting Started
-
-### Dependencies
-
-### Installing
-
-### Executing program
-
-## Help
-
-## Authors
-
-## Version History
-
-## License
-
-## Acknowledgments
+A repository containing my assignments I create for the Algorithms course from Princeton University in Coursera
