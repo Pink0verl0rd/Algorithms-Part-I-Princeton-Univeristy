@@ -1,3 +1,4 @@
+package queues;
 import edu.princeton.cs.algs4.StdIn;
 
 public class Permutation {
