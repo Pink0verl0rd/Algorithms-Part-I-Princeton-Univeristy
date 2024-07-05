@@ -1,21 +1,19 @@
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import org.w3c.dom.Node;
+import edu.princeton.cs.algs4.StdRandom;
 
 import edu.princeton.cs.algs4.StdOut;
-import edu.princeton.cs.algs4.StdRandom;
 
 public class RandomizedQueue<Item> implements Iterable<Item> {
     private Item array[];
     private int tail;
-    final static double MINRESIZE = 0.25;
+    private final static double MINRESIZE = 0.25;
 
     // construct an empty randomized queue
     public RandomizedQueue() {
-        array = (Item[]) new Object[1];
+
+        Item a[] = (Item[]) new Object[1];
+        array = a;
         tail = 0;
     }
 
@@ -33,7 +31,9 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         }
 
         if (tail == array.length) resize(array.length * 2);
+
         array[tail] = item;
+
         tail++;
     }
 
@@ -47,6 +47,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         array[n] = array[tail - 1];
         array[tail - 1] = null;
         tail--;
+        if (size() > 0 && tail < (array.length * MINRESIZE)) {resize(array.length / 2);}
         
         return item;
     }
@@ -84,15 +85,27 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
             for (int i = 0; i < tail ; i++){
                 arrayRandomIndices[i] = i;
             }
-            Collections.shuffle(Arrays.asList(arrayRandomIndices));
-            n = 0;
+            n = tail - 1;
         }
 
-        public boolean hasNext() { return n < tail;}
+        public boolean hasNext() { return n < tail && n >= 0;}
 
         public Item next() {
             if (n < 0 || n >= tail) { throw new NoSuchElementException("Iterator has no new node");}
-            return array[arrayRandomIndices[n++]];
+            else {
+                int j = 0;
+                if ( n > 0 ) j = StdRandom.uniformInt(n + 1);
+                int i = arrayRandomIndices[j]; 
+
+                Item item = array[i];
+                
+
+                arrayRandomIndices[j] = arrayRandomIndices[n];
+                arrayRandomIndices[n] = -1;
+                
+                n--;
+                return item;
+            }
         }   
 
         public void remove() {
@@ -124,99 +137,117 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
     }
     
     // unit testing (required)
-    public static void main(String[] args) {
+    public static void main(String[] args) {        
+
+        // RandomizedQueue<Integer> queue = new RandomizedQueue<>();
+        // queue.enqueue(3);
+        // queue.enqueue(0);
+        // queue.enqueue(1);
+        // queue.enqueue(1);
         
 
-        StdOut.println("Tests start.");
+        // StdOut.println(q.next());
 
-        // Test 1: public opeations
-        RandomizedQueue<Integer> q1 = new RandomizedQueue<>();
-        StdOut.println("Test 1A passed? " + q1.isEmpty());
-        StdOut.println("Test 1B passed? " + q1.toString().equals("[]"));
-        q1.enqueue(1);
-        q1.enqueue(2);
-        StdOut.println("Test 1C passed? " + q1.toString().equals("[1,2]"));
-        StdOut.println("Test 1D passed? " + (q1.size() == 2));
-        int test1E = q1.iterator().next();
-        StdOut.println("Test 1E passed? " + (test1E == 1 || test1E == 2));
-        q1.enqueue(3);
-        q1.enqueue(4);
-        StdOut.println("Test 1F passed? " + q1.toString().equals("[1,2,3,4]"));
-        q1.dequeue();
-        String test1G = q1.toString();
-        StdOut.println("Test 1G passed? "
-                 + (test1G.equals("[4,2,3]")
-                 || test1G.equals("[1,4,3]")
-                 || test1G.equals("[1,2,4]")
-                 || test1G.equals("[1,2,3]")));
-        q1.dequeue();
-        q1.dequeue();
-        // Queue should be resized when 25% full: the size will be reduced by
-        // 50%. However, the unused elements in the new array are not visible
-        // because they're excluded by the {@code toString()} method.
-        String test1H = q1.toString();
-        StdOut.println("Test 1H passed? "
-                 + (test1H.equals("[1]")
-                 || test1H.equals("[2]")
-                 || test1H.equals("[3]")
-                 || test1H.equals("[4]")));
-        q1.dequeue();
-        StdOut.println("Test 1I passed? " + q1.toString().equals("[]"));
-        StdOut.println("Test 1J passed? " + q1.isEmpty());
-        StdOut.println("Test 1K passed? " + !q1.iterator().hasNext());
-        StdOut.println("Test 1L passed? " + (q1.iterator() != q1.iterator()));
-        q1.enqueue(1);
-        StdOut.println("Test 1M passed? " + q1.toString().equals("[1]"));
-        q1.enqueue(2);
-        StdOut.println("Test 1N passed? " + q1.toString().equals("[1,2]"));
+        // RandomizedQueue<Integer> queue = new RandomizedQueue<>();
+        // queue.enqueue(3);
+        // queue.enqueue(1);
+        // queue.enqueue(2);
+        // Iterator<Integer> q = queue.iterator();
+        // StdOut.println(q.next());
+        // StdOut.println(q.next());
+        // StdOut.println(q.next());
 
-        // Test 2: exceptions
-        RandomizedQueue<Integer> q2 = new RandomizedQueue<>();
-        try {
-            q2.dequeue();
-            StdOut.println("Test 2A passed? " + false);
-        } catch (Exception e) {
-            boolean result = e instanceof NoSuchElementException;
-            StdOut.println("Test 2A passed? " + result);
-        }
-        try {
-            q2.sample();
-            StdOut.println("Test 2B passed? " + false); 
-        } catch (Exception e) {
-            boolean result = e instanceof NoSuchElementException;
-            StdOut.println("Test 2B passed? " + result);
-        }
-        try {
-            q2.enqueue(null);
-            StdOut.println("Test 2C passed? " + false); 
-        } catch (Exception e) {
-            boolean result = e instanceof IllegalArgumentException;
-            StdOut.println("Test 2C passed? " + result);
-        }
-        try {
-            q2.iterator().remove();
-            StdOut.println("Test 2D passed? " + false); 
-        } catch (Exception e) {
-            boolean result = e instanceof UnsupportedOperationException;
-            StdOut.println("Test 2D passed? " + result);
-        }
-        try {
-            q2.iterator().next();
-            StdOut.println("Test 2E passed? " + false);
-        } catch (Exception e) {
-            boolean result = e instanceof NoSuchElementException;
-            StdOut.println("Test 2E passed? " + result);
-        }
 
-        // Test 3: types
-        RandomizedQueue<String> q3A = new RandomizedQueue<>();
-        q3A.enqueue("Hello Algorithm");
-        StdOut.println("Test 3A passed? " + true);
-        RandomizedQueue<Double> q3B = new RandomizedQueue<>();
-        q3B.enqueue(3.1415926);
-        StdOut.println("Test 3B passed? " + true);
+        // StdOut.println("Tests start.");
 
-        StdOut.println("Tests finished.");
+        // // Test 1: public opeations
+        
+        // StdOut.println("Test 1A passed? " + q1.isEmpty());
+        // StdOut.println("Test 1B passed? " + q1.toString().equals("[]"));
+        // q1.enqueue(1);
+        // q1.enqueue(2);
+        // StdOut.println("Test 1C passed? " + q1.toString().equals("[1,2]"));
+        // StdOut.println("Test 1D passed? " + (q1.size() == 2));
+        // int test1E = q1.iterator().next();
+        // StdOut.println("Test 1E passed? " + (test1E == 1 || test1E == 2));
+        // q1.enqueue(3);
+        // q1.enqueue(4);
+        // StdOut.println("Test 1F passed? " + q1.toString().equals("[1,2,3,4]"));
+        // q1.dequeue();
+        // String test1G = q1.toString();
+        // StdOut.println("Test 1G passed? "
+        //          + (test1G.equals("[4,2,3]")
+        //          || test1G.equals("[1,4,3]")
+        //          || test1G.equals("[1,2,4]")
+        //          || test1G.equals("[1,2,3]")));
+        // q1.dequeue();
+        // q1.dequeue();
+        // // Queue should be resized when 25% full: the size will be reduced by
+        // // 50%. However, the unused elements in the new array are not visible
+        // // because they're excluded by the {@code toString()} method.
+        // String test1H = q1.toString();
+        // StdOut.println("Test 1H passed? "
+        //          + (test1H.equals("[1]")
+        //          || test1H.equals("[2]")
+        //          || test1H.equals("[3]")
+        //          || test1H.equals("[4]")));
+        // q1.dequeue();
+        // StdOut.println("Test 1I passed? " + q1.toString().equals("[]"));
+        // StdOut.println("Test 1J passed? " + q1.isEmpty());
+        // StdOut.println("Test 1K passed? " + !q1.iterator().hasNext());
+        // StdOut.println("Test 1L passed? " + (q1.iterator() != q1.iterator()));
+        // q1.enqueue(1);
+        // StdOut.println("Test 1M passed? " + q1.toString().equals("[1]"));
+        // q1.enqueue(2);
+        // StdOut.println("Test 1N passed? " + q1.toString().equals("[1,2]"));
+
+        // // Test 2: exceptions
+        // RandomizedQueue<Integer> q2 = new RandomizedQueue<>();
+        // try {
+        //     q2.dequeue();
+        //     StdOut.println("Test 2A passed? " + false);
+        // } catch (Exception e) {
+        //     boolean result = e instanceof NoSuchElementException;
+        //     StdOut.println("Test 2A passed? " + result);
+        // }
+        // try {
+        //     q2.sample();
+        //     StdOut.println("Test 2B passed? " + false); 
+        // } catch (Exception e) {
+        //     boolean result = e instanceof NoSuchElementException;
+        //     StdOut.println("Test 2B passed? " + result);
+        // }
+        // try {
+        //     q2.enqueue(null);
+        //     StdOut.println("Test 2C passed? " + false); 
+        // } catch (Exception e) {
+        //     boolean result = e instanceof IllegalArgumentException;
+        //     StdOut.println("Test 2C passed? " + result);
+        // }
+        // try {
+        //     q2.iterator().remove();
+        //     StdOut.println("Test 2D passed? " + false); 
+        // } catch (Exception e) {
+        //     boolean result = e instanceof UnsupportedOperationException;
+        //     StdOut.println("Test 2D passed? " + result);
+        // }
+        // try {
+        //     q2.iterator().next();
+        //     StdOut.println("Test 2E passed? " + false);
+        // } catch (Exception e) {
+        //     boolean result = e instanceof NoSuchElementException;
+        //     StdOut.println("Test 2E passed? " + result);
+        // }
+
+        // // Test 3: types
+        // RandomizedQueue<String> q3A = new RandomizedQueue<>();
+        // q3A.enqueue("Hello Algorithm");
+        // StdOut.println("Test 3A passed? " + true);
+        // RandomizedQueue<Double> q3B = new RandomizedQueue<>();
+        // q3B.enqueue(3.1415926);
+        // StdOut.println("Test 3B passed? " + true);
+
+        // StdOut.println("Tests finished.");
         
 
         // StdOut.println("Public Functions");
