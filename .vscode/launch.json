@@ -1,0 +1,77 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Permutation",
+            "request": "launch",
+            "mainClass": "Permutation",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Deque",
+            "request": "launch",
+            "mainClass": "Deque",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "Percolation",
+            "request": "launch",
+            "mainClass": "Percolation",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "PercolationStats",
+            "request": "launch",
+            "mainClass": "PercolationStats",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "PercolationVisualizer",
+            "request": "launch",
+            "mainClass": "PercolationVisualizer",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "RandomizedQueue",
+            "request": "launch",
+            "mainClass": "RandomizedQueue",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "HelloGoodbye",
+            "request": "launch",
+            "mainClass": "hello.HelloGoodbye",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "HelloWorld",
+            "request": "launch",
+            "mainClass": "hello.HelloWorld",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
+            "name": "RandomWord",
+            "request": "launch",
+            "mainClass": "hello.RandomWord",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        }
+    ]
+}
