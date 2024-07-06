@@ -102,10 +102,12 @@
      }
 
 
-     private static class SlopeComparator implements Comparator<Point> {
-        public int compare(Point v,Point w) {
-            return v.compareTo(w);
+     private class SlopeComparator implements Comparator<Point> {
+        @Override
+        public int compare(Point v, Point w) {
+            return Double.compare(slopeTo(v), slopeTo(w));
         }
+        
      }
  
  

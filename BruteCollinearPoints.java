@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -57,6 +58,7 @@ public class BruteCollinearPoints {
         }
 
         // draw the points
+
         StdDraw.enableDoubleBuffering();
         StdDraw.setXscale(0, 10);
         StdDraw.setYscale(0, 10);

@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "FastCollinearPoints",
+            "request": "launch",
+            "mainClass": "FastCollinearPoints",
+            "projectName": "Algorithms Part I Princeton Univeristy_3ca4c27d"
+        },
+        {
+            "type": "java",
             "name": "BruteCollinearPoints",
             "request": "launch",
             "mainClass": "BruteCollinearPoints",
